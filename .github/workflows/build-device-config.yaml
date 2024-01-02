@@ -27,7 +27,7 @@ jobs:
     - name: Check out config repo
       uses: actions/checkout@v3
       with:
-        path: config/
+        path: config/test_device
     
     - name: Check some stuff
       run: |
