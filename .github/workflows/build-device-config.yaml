@@ -23,7 +23,6 @@ jobs:
       with:
         repository: ${{ env.UPSTREAM_REPO }}
         ref: ${{ env.VERSION_REF }}
-        path: HayBox
 
     - name: Check out config repo
       uses: actions/checkout@v3
