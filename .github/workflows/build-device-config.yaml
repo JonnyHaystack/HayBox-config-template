@@ -39,7 +39,8 @@ jobs:
     - name: Install yaml2json
       run: python3 -m pip install remarshal
 
-    - name: Fetch Build Matrix
+    - name: Read metadata from yaml file
+      id: parse_yaml
         # echo "build_matrix=$(yaml2json 'meta.yaml' | jq -c .)" >> $GITHUB_ENV
       run: |
         echo "metadata=$(yaml2json 'meta.yaml')" >> "$GITHUB_OUTPUT"
@@ -48,6 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    needs: metadata
     env:
       UPSTREAM_REPO: ${{ needs.metadata.outputs.repo }}
       VERSION_REF: ${{ needs.metadata.outputs.revision }}
