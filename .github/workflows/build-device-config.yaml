@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Parse config metadata
     outputs:
-      metadata: ${{ fromJson(steps.parse_yaml.outputs.metadata) }}
+      meta_json: ${{ steps.parse_yaml.outputs.metadata }}
       # repo: ${{ fromJson(steps.parse_yaml.outputs.metadata).repo }}
       # revision: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
       # build_matrix: "${{ fromJson(steps.parse_yaml.outputs.metadata).build }}"
@@ -51,13 +51,13 @@ jobs:
       contents: write
     needs: metadata
     env:
-      UPSTREAM_REPO: ${{ fromJson(needs.metadata.outputs.metadata.repo) }}
-      VERSION_REF: ${{ fromJson(needs.metadata.outputs.metadata.revision) }}
+      FIRMWARE_REPO: ${{ fromJson(needs.metadata.outputs.meta_json).repo }}
+      VERSION_REF: ${{ fromJson(needs.metadata.outputs.meta_json).revision }}
       # BUILD_MATRIX: ${{ }}
     #   VERSION_REF: ${{ github.ref_type == 'tag' && github.ref_name || github.sha }}
     strategy:
         matrix: 
-          include: ${{ fromJson(needs.metadata.outputs.metadata.build_matrix) }}
+          include: ${{ fromJson(needs.metadata.outputs.meta_json).build_matrix }}
             # - env: pico
             #   bin_ext: uf2
 
@@ -65,7 +65,7 @@ jobs:
     - name: Check out HayBox repo
       uses: actions/checkout@v3
       with:
-        repository: ${{ env.UPSTREAM_REPO }}
+        repository: ${{ env.FIRMWARE_REPO }}
         ref: ${{ env.VERSION_REF }}
 
     - name: Check out config repo
