@@ -10,7 +10,7 @@ jobs:
       meta_json: ${{ steps.parse_yaml.outputs.metadata }}
       # repo: ${{ fromJson(steps.parse_yaml.outputs.metadata).repo }}
       # revision: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
-      build_matrix: "${{ steps.parse_yaml.outputs.metadata.build }}"
+      build_matrix: ${{ steps.parse_yaml.outputs.metadata.build }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
     #   VERSION_REF: ${{ github.ref_type == 'tag' && github.ref_name || github.sha }}
     strategy:
         matrix: 
-          include: ${{ fromJson(needs.metadata.outputs.meta_json).build }}
+          include: ${{ fromJson(needs.metadata.outputs.build_matrix) }}
             # - env: pico
             #   bin_ext: uf2
 
