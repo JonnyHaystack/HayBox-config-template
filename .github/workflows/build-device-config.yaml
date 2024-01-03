@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Parse config metadata
     outputs:
-      # metadata: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
-      repo: ${{ fromJson(steps.parse_yaml.outputs.metadata).repo }}
-      revision: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
-      build_matrix: "${{ fromJson(steps.parse_yaml.outputs.metadata).build }}"
+      metadata: ${{ fromJson(steps.parse_yaml.outputs.metadata) }}
+      # repo: ${{ fromJson(steps.parse_yaml.outputs.metadata).repo }}
+      # revision: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
+      # build_matrix: "${{ fromJson(steps.parse_yaml.outputs.metadata).build }}"
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -51,12 +51,13 @@ jobs:
       contents: write
     needs: metadata
     env:
-      UPSTREAM_REPO: ${{ needs.metadata.outputs.repo }}
-      VERSION_REF: ${{ needs.metadata.outputs.revision }}
+      UPSTREAM_REPO: ${{ fromJson(needs.metadata.outputs.metadata.repo) }}
+      VERSION_REF: ${{ fromJson(needs.metadata.outputs.metadata.revision) }}
+      # BUILD_MATRIX: ${{ }}
     #   VERSION_REF: ${{ github.ref_type == 'tag' && github.ref_name || github.sha }}
     strategy:
         matrix: 
-          include: ${{ needs.metadata.outputs.build_matrix }}
+          include: ${{ fromJson(needs.metadata.outputs.metadata.build_matrix) }}
             # - env: pico
             #   bin_ext: uf2
 
