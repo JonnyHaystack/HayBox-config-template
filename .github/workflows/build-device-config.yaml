@@ -26,8 +26,8 @@ jobs:
         echo "${{ steps.parse_yaml.outputs }}"
         echo "${{ steps.parse_yaml.outputs.repo }}"
         echo "${{ steps.parse_yaml.outputs.revision }}"
-        echo "${{ steps.parse_yaml.outputs.build }}"
-        echo "${{ steps.parse_yaml.outputs.build.array }}"
+        echo "${{ steps.parse_yaml.outputs.build_matrix }}"
+        echo "${{ steps.parse_yaml.outputs.build_matrix.array }}"
     
     # - name: Get SDK Version from config
     #   id: parse_yaml
