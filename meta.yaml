@@ -1,0 +1,5 @@
+repo: JonnyHaystack/HayBox
+revision: configurator
+build:
+  - env: pico
+    bin_ext: uf2

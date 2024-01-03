@@ -3,19 +3,50 @@ name: PlatformIO CI
 on: [push]
 
 jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    name: Parse config metadata
+    outputs:
+      repo: ${{ steps.parse_yaml.outputs.repo }}
+      revision: ${{ steps.parse_yaml.outputs.revision }}
+      build_matrix: ${{ steps.parse_yaml.outputs.build }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Read metadata from yaml file
+      id: parse_yaml
+      uses: pietrobolcato/action-read-yaml@1.1.0
+      with:
+        config: meta.yaml
+    
+    # - name: Get SDK Version from config
+    #   id: parse_yaml
+    #   uses: mikefarah/yq@master
+    #   with:
+    #     cmd: yq '' 'meta.yaml'
+
+    # - name: Install yaml2json
+    #   run: python3 -m pip install remarshal
+
+    # - name: Fetch Build Matrix
+    #   run: |
+    #     echo "build_matrix=$(yaml2json '${{ inputs.build_matrix_path }}' | jq -c .)" >> $GITHUB_ENV
+    #     yaml2json "${{ inputs.build_matrix_path }}" | jq
+
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     env:
-      UPSTREAM_REPO: JonnyHaystack/HayBox
-      VERSION_REF: v2.4.0
+      UPSTREAM_REPO: ${{ needs.metadata.outputs.repo }}
+      VERSION_REF: ${{ needs.metadata.outputs.revision }}
     #   VERSION_REF: ${{ github.ref_type == 'tag' && github.ref_name || github.sha }}
     strategy:
-        matrix:
-          include:
-            - env: pico
-              bin_ext: uf2
+        matrix: 
+          include: ${{ needs.metadata.outputs.build_matrix }}
+            # - env: pico
+            #   bin_ext: uf2
 
     steps:
     - name: Check out HayBox repo
