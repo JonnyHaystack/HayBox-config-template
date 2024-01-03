@@ -9,14 +9,15 @@ jobs:
     outputs:
       repo: ${{ steps.parse_yaml.outputs.repo }}
       revision: ${{ steps.parse_yaml.outputs.revision }}
-      build_matrix: ${{ steps.parse_yaml.outputs.build }}
+      build_matrix: ${{ steps.parse_yaml.outputs.build.array }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
     - name: Read metadata from yaml file
       id: parse_yaml
-      uses: pietrobolcato/action-read-yaml@1.1.0
+      # uses: pietrobolcato/action-read-yaml@1.1.0
+      uses: hyorman/action-read-yaml@set-array-output
       with:
         config: meta.yaml
     
@@ -26,6 +27,7 @@ jobs:
         echo "${{ steps.parse_yaml.outputs.repo }}"
         echo "${{ steps.parse_yaml.outputs.revision }}"
         echo "${{ steps.parse_yaml.outputs.build }}"
+        echo "${{ steps.parse_yaml.outputs.build.array }}"
     
     # - name: Get SDK Version from config
     #   id: parse_yaml
