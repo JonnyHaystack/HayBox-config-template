@@ -41,7 +41,7 @@ jobs:
     - name: Fetch Build Matrix
         # echo "build_matrix=$(yaml2json 'meta.yaml' | jq -c .)" >> $GITHUB_ENV
       run: |
-        yaml2json "meta.yaml"
+        echo "$(yaml2json 'meta.yaml')" >> "$GITHUB_OUTPUT"
 
   build:
     runs-on: ubuntu-latest
