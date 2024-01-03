@@ -54,6 +54,8 @@ jobs:
       HAYBOX_REPO: ${{ fromJson(needs.metadata.outputs.meta_json).repo }}
       HAYBOX_REVISION: ${{ fromJson(needs.metadata.outputs.meta_json).revision }}
       DEVICE_CONFIG_REVISION: ${{ github.ref_type == 'tag' && github.ref_name || github.sha }}
+      PIO_ENV: ${{ matrix.env }}
+      BIN_EXT: ${{ matrix.bin_ext }}
     strategy:
         matrix: 
           include: ${{ fromJson(needs.metadata.outputs.meta_json).build }}
@@ -97,9 +99,6 @@ jobs:
         echo "ARTIFACT_PATH=${PIO_ENV}/${ARTIFACT_FILENAME}" >> "$GITHUB_ENV"
 
     - name: Build ${{ matrix.env }} env
-      env:
-        PIO_ENV: ${{ matrix.env }}
-        BIN_EXT: ${{ matrix.bin_ext }}
         # echo "ARTIFACT_PATH=${PIO_ENV}/HayBox-${HAYBOX_REVISION}-${PIO_ENV}-${DEVICE_CONFIG_REVISION}.${BIN_EXT}" >> "$GITHUB_ENV"
         # cp ".pio/build/${PIO_ENV}/firmware.${BIN_EXT}" "${PIO_ENV}/HayBox-${HAYBOX_REVISION}-${PIO_ENV}-${DEVICE_CONFIG_REVISION}.${BIN_EXT}"
       run: |
