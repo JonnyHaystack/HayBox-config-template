@@ -92,11 +92,11 @@ jobs:
 
     - name: Set artifact filename environment variable
       run: |
-        echo "ARTIFACT_FILENAME=HayBox-${HAYBOX_REVISION}-${PIO_ENV}-${DEVICE_CONFIG_REVISION}.${BIN_EXT}" >> "$GITHUB_ENV"
+        echo "ARTIFACT_NAME=HayBox-${HAYBOX_REVISION}-${PIO_ENV}-${DEVICE_CONFIG_REVISION}.${BIN_EXT}" >> "$GITHUB_ENV"
 
     - name: Set artifact path environment variable
       run: |
-        echo "ARTIFACT_PATH=${PIO_ENV}/${ARTIFACT_FILENAME}" >> "$GITHUB_ENV"
+        echo "ARTIFACT_PATH=${PIO_ENV}/${ARTIFACT_NAME}" >> "$GITHUB_ENV"
 
     - name: Build ${{ matrix.env }} env
         # echo "ARTIFACT_PATH=${PIO_ENV}/HayBox-${HAYBOX_REVISION}-${PIO_ENV}-${DEVICE_CONFIG_REVISION}.${BIN_EXT}" >> "$GITHUB_ENV"
