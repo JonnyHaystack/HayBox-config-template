@@ -7,9 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Parse config metadata
     outputs:
-      repo: ${{ fromJson(steps.parse_yaml.outputs).repo }}
-      revision: ${{ fromJson(steps.parse_yaml.outputs).revision }}
-      build_matrix: ${{ fromJson(steps.parse_yaml.outputs).build }}
+      # metadata: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
+      repo: ${{ fromJson(steps.parse_yaml.outputs.metadata).repo }}
+      revision: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
+      build_matrix: ${{ fromJson(steps.parse_yaml.outputs.metadata).build }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -41,7 +42,7 @@ jobs:
     - name: Fetch Build Matrix
         # echo "build_matrix=$(yaml2json 'meta.yaml' | jq -c .)" >> $GITHUB_ENV
       run: |
-        echo "$(yaml2json 'meta.yaml')" >> "$GITHUB_OUTPUT"
+        echo "metadata=$(yaml2json 'meta.yaml')" >> "$GITHUB_OUTPUT"
 
   build:
     runs-on: ubuntu-latest
