@@ -20,6 +20,13 @@ jobs:
       with:
         config: meta.yaml
     
+    - name: print stuff out
+      run: |
+        echo "${{ steps.parse_yaml.outputs }}"
+        echo "${{ steps.parse_yaml.outputs.repo }}"
+        echo "${{ steps.parse_yaml.outputs.revision }}"
+        echo "${{ steps.parse_yaml.outputs.build }}"
+    
     # - name: Get SDK Version from config
     #   id: parse_yaml
     #   uses: mikefarah/yq@master
