@@ -103,12 +103,15 @@ jobs:
         # echo "ARTIFACT_PATH=${PIO_ENV}/HayBox-${HAYBOX_REVISION}-${PIO_ENV}-${DEVICE_CONFIG_REVISION}.${BIN_EXT}" >> "$GITHUB_ENV"
         # cp ".pio/build/${PIO_ENV}/firmware.${BIN_EXT}" "${PIO_ENV}/HayBox-${HAYBOX_REVISION}-${PIO_ENV}-${DEVICE_CONFIG_REVISION}.${BIN_EXT}"
       run: |
-        pio run -e "${PIO_ENV}"
-        mkdir -p "${MATRIX_ENV}"
+        pio run -e "$PIO_ENV"
+        mkdir -p "$MATRIX_ENV"
+
         ARTIFACT_FILENAME="HayBox-${HAYBOX_REVISION}-${PIO_ENV}-${DEVICE_CONFIG_REVISION}.${BIN_EXT}"
         ARTIFACT_PATH="${PIO_ENV}/${ARTIFACT_FILENAME}"
+
         echo "$ARTIFACT_FILENAME" >> "$GITHUB_ENV"
         echo "$ARTIFACT_PATH" >> "$GITHUB_ENV"
+
         cp ".pio/build/${PIO_ENV}/firmware.${BIN_EXT}" "$ARTIFACT_PATH"
 
     - name: Publish ${{ matrix.env }} artifacts
