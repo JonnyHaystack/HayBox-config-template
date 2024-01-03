@@ -10,7 +10,7 @@ jobs:
       # metadata: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
       repo: ${{ fromJson(steps.parse_yaml.outputs.metadata).repo }}
       revision: ${{ fromJson(steps.parse_yaml.outputs.metadata).revision }}
-      build_matrix: ${{ fromJson(steps.parse_yaml.outputs.metadata).build }}
+      build_matrix: "${{ fromJson(steps.parse_yaml.outputs.metadata).build }}"
     steps:
     - name: Checkout
       uses: actions/checkout@v3
