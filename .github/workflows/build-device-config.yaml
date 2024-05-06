@@ -38,17 +38,15 @@ jobs:
 
     steps:
     - name: Check out HayBox repo
-      uses: actions/checkout@v3
-      with:
-        repository: ${{ env.HAYBOX_REPO }}
-        ref: ${{ env.HAYBOX_REVISION }}
+      run: |
+        git clone "$HAYBOX_REPO" .
+        git checkout "$HAYBOX_REVISION"
 
     - name: Check out config repo
-      run: |
-        git clone "$HAYBOX_REPO" config/test_device
-        git -C config/test_device checkout "$HAYBOX_REVISION"
-      # git clone "$HAYBOX_REPO" "config/${PIO_ENV}"
-      # git -C "config/${PIO_ENV}" checkout "$HAYBOX_REVISION"
+      uses: actions/checkout@v3
+      with:
+        path: config/test_device
+        # path: config/${{ env.PIO_ENV }}
     
     - name: Check some stuff
       run: |
