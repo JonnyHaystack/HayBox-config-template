@@ -39,7 +39,7 @@ jobs:
     steps:
     - name: Check out HayBox repo
       run: |
-        git clone "$HAYBOX_REPO" .
+        git clone "git@github.com:${HAYBOX_REPO}" .
         git checkout "$HAYBOX_REVISION"
 
     - name: Check out config repo
