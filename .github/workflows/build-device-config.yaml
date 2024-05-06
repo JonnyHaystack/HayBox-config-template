@@ -44,9 +44,11 @@ jobs:
         ref: ${{ env.HAYBOX_REVISION }}
 
     - name: Check out config repo
-      uses: actions/checkout@v3
-      with:
-        path: config/test_device
+      run: |
+        git clone "$HAYBOX_REPO" config/test_device
+        git -C config/test_device checkout "$HAYBOX_REVISION"
+      # git clone "$HAYBOX_REPO" "config/${PIO_ENV}"
+      # git -C "config/${PIO_ENV}" checkout "$HAYBOX_REVISION"
     
     - name: Check some stuff
       run: |
