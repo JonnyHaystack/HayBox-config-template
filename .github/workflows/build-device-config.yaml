@@ -45,8 +45,7 @@ jobs:
     - name: Check out config repo
       uses: actions/checkout@v3
       with:
-        path: config/test_device
-        # path: config/${{ env.PIO_ENV }}
+        path: config/${{ env.PIO_ENV }}
     
     - name: Check some stuff
       run: |
