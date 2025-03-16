@@ -2,4 +2,4 @@ name: Build device config
 on: [push, pull_request]
 jobs:
   build:
-    uses: JonnyHaystack/HayBox/.github/workflows/build-device-config.yml@configurator
+    uses: JonnyHaystack/HayBox/.github/workflows/build-device-config.yml@master
