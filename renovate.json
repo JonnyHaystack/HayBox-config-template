@@ -10,10 +10,9 @@
       "matchStrings": [
         "revision:\\s+(?<currentDigest>[^\\s]+)"
       ],
-      "currentValueTemplate": "main",
       "depNameTemplate": "HayBox",
       "packageNameTemplate": "https://github.com/JonnyHaystack/HayBox",
-      "datasourceTemplate": "git-refs"
+      "datasourceTemplate": "git-tags"
     }
   ]
 }
